@@ -2,6 +2,10 @@
 
 Small project using Ansible to setup a Pi to run Google Calendar on startup.
 
+This repo is based on the write up posted on howchooo.com:
+
+https://howchoo.com/pi/how-to-make-a-raspberry-pi-google-calendar
+
 ## Usage
 
 To use this, you'll need to install `ansible`.
