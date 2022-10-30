@@ -1,0 +1,37 @@
+---
+- name: Deploy Pi Calendar
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Update System
+    ansible.builtin.apt:
+      name: "*"
+      state: latest
+
+  - name: Install Packages
+    ansible.builtin.apt:
+      name:
+        - chromium-browser
+        - unclutter
+      state: present
+
+  - name: Place Startup Script
+    ansible.builtin.copy:
+      src: ./startup.sh
+      dest: /home/pi/startup.sh
+      mode: 0755
+
+  - name: Add Startup Script to autostart
+    ansible.builtin.lineinfile:
+      path: "/home/pi/.config/lxsession/LXDE-pi/autostart"
+      line: "{{ item }}"
+    loop:
+      - "@sh /home/pi/startup.sh"
+      - "@xset s 0 0"
+      - "@xset s noblank"
+      - "@xset s noexpose"
+      - "@xset dpms 0 0 0"
+      - "@unclutter -idle 0"
+
+...
